@@ -6,13 +6,14 @@
 
 package datastrucutre2a;
 import datastrucutre2a.models.*;
+import java.text.DecimalFormat;
 import java.util.Random;
 /**
  *
  * @author Joost & Mohamed
  */
 public class Main {
-    private static int studentN = 50060001;
+    private static int studentN = 50060000;
     private static String group;
     private static float grade;
     private static String[] g = {"G","N","S","T"};
@@ -21,16 +22,17 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       s = generateStudent();
-       
+        for (int i = 0; i < 200; i++) {
+            s = generateStudent();
+        }
     }
     
     public static Student generateStudent(){
-        int counter = 1;
         Random rn = new Random();
         int i = rn.nextInt(4)+0;
         group = "I" + g[i] + "20" + 1;
-        grade = (int)(Math.random()*10);
+        grade = (float)(Math.random()*10);
+        
         studentN++;
         Student s = new Student(studentN,group,grade);
         System.out.println(s);
