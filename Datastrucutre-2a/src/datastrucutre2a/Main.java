@@ -5,18 +5,36 @@
  */
 
 package datastrucutre2a;
-
+import datastrucutre2a.models.*;
+import java.util.Random;
 /**
  *
- * @author Joost
+ * @author Joost & Mohamed
  */
 public class Main {
-
+    private static int studentN = 50060001;
+    private static String group;
+    private static float grade;
+    private static String[] g = {"G","N","S","T"};
+    private static Student s;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       s = generateStudent();
+       
+    }
+    
+    public static Student generateStudent(){
+        int counter = 1;
+        Random rn = new Random();
+        int i = rn.nextInt(4)+0;
+        group = "I" + g[i] + "20" + 1;
+        grade = (int)(Math.random()*10);
+        studentN++;
+        Student s = new Student(studentN,group,grade);
+        System.out.println(s);
+        return s;
     }
     
 }
