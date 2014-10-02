@@ -21,6 +21,11 @@ public class Student {
         this.group = group;
         this.grade = grade;
     }
+    
+    public Student(int studentNr , float grade) {
+        this.studentNr = studentNr;
+        this.grade = grade;
+    }
 
     public int getStudentNr() {
         return studentNr;

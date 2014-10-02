@@ -8,6 +8,7 @@ package datastrucutre2a;
 import datastrucutre2a.models.*;
 import datastrucutre2a.models.comparables.StudentCompare;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -18,22 +19,27 @@ import java.util.Random;
 public class Main {
 
     private static int studentN = 50060000;
-    private static String group;
-    private static float grade;
-    private static String[] g = {"G", "N", "S", "T"};
-    private static Student[] s;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
+         Student[] s1 = generateStudents(200);
+         int count = 0;
+         for (Student s2 : s1) {
+             if(s2.getGroup().equals("IG201")){
+             System.out.println(s2.toString());
+             count++;
+             }
+         }
+        System.out.println(count);
     }
 
     public static Student[] generateStudents(int n) {
-        Random rn = new Random();
         int[] studieAmount = new int[4];
         int[] classAmount = new int[4];
+        String[] className = {"G","S","T","N"};
         Student[] students = new Student[n];
         int prevGroup = 0;
         
@@ -59,11 +65,37 @@ public class Main {
             }
         }
         
+        int sum = classAmount[0] + classAmount[1] + classAmount[2] + classAmount[3]; 
+        int counter = 0;
+        String[] classArray = new String[sum];
+            for (int j = 0; j < 4; j++) {
+                for (int i = 1; i < classAmount[j]+1; i++) {
+                    String c = "I" +  className[j] + "20" + i;
+                    
+                    classArray[counter] = c;
+                    counter++;
+                }
+            }
+        
+            
+            
+            for (int i = 0; i < classArray.length; i++) {
+                System.out.println(classArray[i]);
+            }
+        
         prevGroup = 0;
+        int studentNr = 500000000;
+        int teller = 0;
         for (int i = 0; i < n; i++) {
-            int studentNr = 500000000 + i;
-            Student student = new Student(studentNr,);
+            float grade = (float)Math.random()*10;
+            grade = Math.round(grade);
+            studentNr++;
+            if(teller >= classArray.length)
+             teller=0;
+           students[i] = new Student(studentNr,classArray[teller],grade);   
+           teller++;
         }
+        
         return students;
     }
 
