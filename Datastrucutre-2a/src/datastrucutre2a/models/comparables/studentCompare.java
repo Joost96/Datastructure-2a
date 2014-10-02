@@ -12,7 +12,7 @@ import java.util.Comparator;
  *
  * @author Joost
  */
-public class studentCompare {
+public class StudentCompare {
 
     public Comparator studentNrCompare() {
         return new studentNrCompare();
