@@ -23,37 +23,32 @@ public class Main {
     private static int[] classAmount = new int[4];
     private static int[] studieAmount = new int[4];
 
-    private static long totalTimeBucket;
     private static long totalTimeGen;
-    private static long totalTimeInsertion;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        long totalTimeInsertion[] = new long[100];
+        long totalTimeBucket[] = new long[100];
+        for (int i = 0; i < 100; i++) {
+            Student[] s1 = generateStudents(1600);
 
-        Student[] s1 = generateStudents(4800);
-        for (Student s2 : s1) {
-            System.out.println(s2);
-        }
-        System.out.println("\n\n");
+            long startTimeBucket = System.nanoTime();
+            Student[][] s3 = sortByGroup(s1);
+            long endTimeBucket = System.nanoTime();
 
-        Student[][] s3 = sortByGroup(s1);
+            long startTimeInsertion = System.nanoTime();
+            Student[] s5 = insertionSortGrade(s1);
+            long endTimeInsertion = System.nanoTime();
 
-        for (int i = 0; i < s3.length; i++) {
-            for (Student s4 : s3[i]) {
-                System.out.println(s4);
-            }
-        }
-        System.out.println("\n\n");
-        Student[] s5 = insertionSortGrade(s1);
-        for (Student s6 : s5) {
-            System.out.println(s6);
+            totalTimeInsertion[i] = endTimeInsertion - startTimeInsertion;
+            totalTimeBucket[i] = endTimeBucket - startTimeBucket;
         }
 
-        System.out.println(totalTimeBucket + " nano sec , bucket");
-        System.out.println(totalTimeGen + " nano sec , gen");
-        System.out.println(totalTimeInsertion + " nano sec , insertion");
+        System.out.println(avg(totalTimeBucket) + " nano sec , bucket");
+//        System.out.println(totalTimeGen + " nano sec , gen");
+        System.out.println(avg(totalTimeInsertion) + " nano sec , insertion");
     }
 
     public static Student[] generateStudents(int n) {
@@ -96,10 +91,9 @@ public class Main {
             }
         }
 
-        for (int i = 0; i < classArray.length; i++) {
-            System.out.println(classArray[i]);
-        }
-
+//        for (int i = 0; i < classArray.length; i++) {
+//            System.out.println(classArray[i]);
+//        }
         prevGroup = 0;
         int studentNr = 500000000;
         int teller = 0;
@@ -119,7 +113,6 @@ public class Main {
     }
 
     public static Student[][] sortByGroup(Student[] students) {
-        long startTimeBucket = System.nanoTime();
         int amount = studieAmount[1] / classAmount[1];
         if (studieAmount[1] % classAmount[1] != 0) {
             amount++;
@@ -138,8 +131,6 @@ public class Main {
 
             classes[i] = insertionSortStudentNr(classes[i]);
         }
-        long endTimeBucket = System.nanoTime();
-        totalTimeBucket = endTimeBucket - startTimeBucket;
         return classes;
     }
 
@@ -157,7 +148,6 @@ public class Main {
     }
 
     public static Student[] insertionSortGrade(Student array[]) {
-        long startTimeInsertion = System.currentTimeMillis();
         for (int i = 0; i < array.length; i++) {
             int j = i;
             Student B = array[i];
@@ -167,8 +157,16 @@ public class Main {
             }
             array[j] = B;
         }
-        long endTimeInsertion = System.currentTimeMillis();
-        totalTimeInsertion = endTimeInsertion - startTimeInsertion;
         return array;
+    }
+
+    public static long avg(long[] numbers) {
+        long avg =0;
+        long sum =0;
+        for (int i = 0; i < numbers.length; i++) {
+            sum += numbers[i];
+        }
+        avg = sum/numbers.length;
+        return avg;
     }
 }
